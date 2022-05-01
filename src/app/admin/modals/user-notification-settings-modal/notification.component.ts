@@ -1,12 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {
   alertService,
-  User,
   currentUser,
   auth,
+  User
 } from 'src/app/ajs-upgraded-providers';
 import { MatDialogRef } from '@angular/material/dialog';
-import { NgForm, FormBuilder, FormControl, FormGroup } from '@angular/forms'
+import { NgForm, FormsModule, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 
 type userModel = {
   id: any;
@@ -57,6 +57,7 @@ export class notificationComponent implements OnInit {
     }
   }
 
+  // Define the methods of changing the radio button style, to simulate styles of previous Angular/Bootstrap version
   changeItem(val: string, judge: Boolean) {
     this.User[val] = judge;
   }
@@ -86,6 +87,7 @@ export class notificationComponent implements OnInit {
     return arr.join(' ');
   }
 
+  // Actions when 'save'
   saveNotifications(f: NgForm) {
     this.CurrentUser.profile.receive_feedback_notifications = f.value.feedbackSetting;
     this.CurrentUser.profile.receive_portfolio_notifications = f.value.portfolioSetting;
