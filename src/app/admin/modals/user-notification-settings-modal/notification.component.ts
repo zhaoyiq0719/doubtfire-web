@@ -6,25 +6,18 @@ import {
   User
 } from 'src/app/ajs-upgraded-providers';
 import { MatDialogRef } from '@angular/material/dialog';
-import { NgForm, FormsModule, FormBuilder, FormControl, FormGroup } from '@angular/forms'
-
-type userModel = {
-  id: any;
-  receive_task_notifications: any;
-  receive_feedback_notifications: any;
-  receive_portfolio_notifications: any;
-};
+import { NgForm, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 
 @Component({
-  selector: 'notific-setting',
+  selector: 'df-notific-setting',
   templateUrl: './notification.component.html',
   styleUrls: ['./user-notification-settings-modal.scss'],
 })
 export class notificationComponent implements OnInit {
-  User: userModel;
-  feedbackControl = new FormControl(false);
-  portfolioControl = new FormControl(false);
-  taskControl = new FormControl(false);
+  // User: userModel;
+  feedbackControl = new FormControl();
+  portfolioControl = new FormControl();
+  taskControl = new FormControl();
   notificationSettings: FormGroup;
   classList: Array<string>;
   config = {
@@ -42,48 +35,47 @@ export class notificationComponent implements OnInit {
     @Inject(User) private user,
   ) {
     this.notificationSettings = fb.group({
-      taskSetting: this.taskControl,
-      feedbackSetting: this.feedbackControl,
-      portfolioSetting: this.portfolioControl,
+      taskSetting: new FormControl(),
+      feedbackSetting: new FormControl(),
+      portfolioSetting: new FormControl(),
     })
   }
 
   ngOnInit() {
-    this.User = {
-      id: this.CurrentUser.profile.Id,
-      receive_feedback_notifications: this.CurrentUser.profile.receive_feedback_notifications,
-      receive_portfolio_notifications: this.CurrentUser.profile.receive_portfolio_notifications,
-      receive_task_notifications: this.CurrentUser.profile.receive_task_notifications,
-    }
+    this.notificationSettings.setValue({
+      taskSetting: this.CurrentUser.profile.receive_task_notifications,
+      feedbackSetting: this.CurrentUser.profile.receive_feedback_notifications,
+      portfolioSetting: this.CurrentUser.profile.receive_portfolio_notifications
+    }); 
   }
 
   // Define the methods of changing the radio button style, to simulate styles of previous Angular/Bootstrap version
   changeItem(val: string, judge: Boolean) {
-    this.User[val] = judge;
+    this.notificationSettings.value[val] = judge;
   }
 
   get getClassList() {
-    let arr = ['btn', 'btn-default', this.User['receive_task_notifications'] ? 'active' : ''];
+    let arr = ['btn', 'btn-default', this.notificationSettings.value.taskSetting ? 'active' : ''];
     return arr.join(' ');
   }
   get getClassList1() {
-    let arr = ['btn', 'btn-default', this.User['receive_task_notifications'] ? '' : 'active'];
+    let arr = ['btn', 'btn-default', this.notificationSettings.value.taskSetting ? '' : 'active'];
     return arr.join(' ');
   }
   get getClassList2() {
-    let arr = ['btn', 'btn-default', this.User['receive_feedback_notifications'] ? 'active' : ''];
+    let arr = ['btn', 'btn-default', this.notificationSettings.value.feedbackSetting ? 'active' : ''];
     return arr.join(' ');
   }
   get getClassList3() {
-    let arr = ['btn', 'btn-default', this.User['receive_feedback_notifications'] ? '' : 'active'];
+    let arr = ['btn', 'btn-default', this.notificationSettings.value.feedbackSetting ? '' : 'active'];
     return arr.join(' ');
   }
   get getClassList4() {
-    let arr = ['btn', 'btn-default', this.User['receive_portfolio_notifications'] ? 'active' : ''];
+    let arr = ['btn', 'btn-default', this.notificationSettings.value.portfolioSetting ? 'active' : ''];
     return arr.join(' ');
   }
   get getClassList5() {
-    let arr = ['btn', 'btn-default', this.User['receive_portfolio_notifications'] ? '' : 'active'];
+    let arr = ['btn', 'btn-default', this.notificationSettings.value.portfolioSetting ? '' : 'active'];
     return arr.join(' ');
   }
 
@@ -92,12 +84,12 @@ export class notificationComponent implements OnInit {
     this.CurrentUser.profile.receive_feedback_notifications = f.value.feedbackSetting;
     this.CurrentUser.profile.receive_portfolio_notifications = f.value.portfolioSetting;
     this.CurrentUser.profile.receive_task_notifications = f.value.taskSetting;
-    if (this.CurrentUser.profile.Id == this.User.id) {
+    if (this.CurrentUser) {
       this.user.update({id: this.CurrentUser.id, user: this.CurrentUser.profile, Auth_token: this.CurrentUser.authenticationToken})
       this.auth.saveCurrentUser();
-      this.alertService.add("success", "Notification settings saved", 6000);
+      this.alertService.add('success', 'Notification settings saved', 6000);
     } else {
-      this.alertService.add("danger", "Not authorized", 6000)
+      this.alertService.add('danger', 'Not authorized', 6000)
     }
   }
 }

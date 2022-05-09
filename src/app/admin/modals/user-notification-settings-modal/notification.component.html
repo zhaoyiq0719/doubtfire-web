@@ -7,16 +7,16 @@
       <div class="modal-body">
         <div class="form-group">
           <label class="col-sm-6 control-label">Task Notifications</label>
-          <div class="btn-group" ngDefaultControl [(ngModel)]="User.receive_task_notifications" [formControl]="taskControl">
+          <div class="btn-group" ngDefaultControl formControlName="taskSetting">
             <label
               [classList]="getClassList"
-              (click)="changeItem('receive_task_notifications', true)"
+              (click)="changeItem('taskSetting', true)"
             >
               <i class="glyphicon glyphicon-ok"></i>
             </label>
             <label
               [classList]="getClassList1"
-              (click)="changeItem('receive_task_notifications', false)"
+              (click)="changeItem('taskSetting', false)"
             >
               <i class="glyphicon glyphicon-remove"></i>
             </label>
@@ -24,16 +24,16 @@
         </div>
         <div class="form-group">
           <label class="col-sm-6 control-label">Feedback Notifications</label>
-          <div class="btn-group" ngDefaultControl [(ngModel)]="User.receive_feedback_notifications" [formControl]="feedbackControl">
+          <div class="btn-group" ngDefaultControl formControlName="feedbackSetting">
             <label
               [classList]="getClassList2"
-              (click)="changeItem('receive_feedback_notifications', true)"
+              (click)="changeItem('feedbackSetting', true)"
             >
               <i class="glyphicon glyphicon-ok"></i>
             </label>
             <label
               [classList]="getClassList3"
-              (click)="changeItem('receive_feedback_notifications', false)"
+              (click)="changeItem('feedbackSetting', false)"
             >
               <i class="glyphicon glyphicon-remove"></i>
             </label>
@@ -41,16 +41,16 @@
         </div>
         <div class="form-group">
           <label class="col-sm-6 control-label">Portfolio Notifications</label>
-          <div class="btn-group" ngDefaultControl [(ngModel)]="User.receive_portfolio_notifications" [formControl]="portfolioControl">
+          <div class="btn-group" ngDefaultControl formControlName="portfolioSetting">
             <label
               [classList]="getClassList4"
-              (click)="changeItem('receive_portfolio_notifications', true)"
+              (click)="changeItem('portfolioSetting', true)"
             >
               <i class="glyphicon glyphicon-ok"></i>
             </label>
             <label
               [classList]="getClassList5"
-              (click)="changeItem('receive_portfolio_notifications', false)"
+              (click)="changeItem('portfolioSetting', false)"
             >
               <i class="glyphicon glyphicon-remove"></i>
             </label>
