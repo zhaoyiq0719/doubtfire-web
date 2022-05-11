@@ -1,0 +1,14 @@
+::ng-deep .custom-dialog-class {
+    mat-dialog-container {
+        border-radius: 6px;
+        padding: 0px;
+    }
+}
+
+.modal-dialog {
+    margin: 0px;
+}
+
+.modal-body {
+    text-align: center;
+}
